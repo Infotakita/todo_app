@@ -20,6 +20,34 @@ app.use(express.urlencoded({
 
 //rotas
 
+
+app.get('ativas', (requisicao, resposta) => {
+    `
+    SELECT * FROM tarefas
+    WHERE completa = 0
+    
+    
+    `
+    conexao.query(sql, (erro, dados) =>{
+        if (erro) {
+            return console.log(erro) 
+            
+        }
+        const tarefas = dados.map((dados) =>{
+            return{
+                id: dados.id,
+                descricao: dados.descricao,
+                completa: false
+            }
+        })
+
+        const quantidadeTArefas = tarefas.length
+        resposta.render('ativas', {tarefas, quantidadeTArefas})
+    })
+
+})
+
+
 app.post('/descompletar', (requisicao, resposta) =>  {
     const id = requisicao.body.id
     const sql = `
