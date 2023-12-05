@@ -41,20 +41,20 @@ function excluirTarefa(id) {
 function alterarTema() {
         const tema = localStorage.getItem("tema")
         const body = document.querySelector("body")
-        const buttons = document.querySelector(".tema-button")
+        const button = document.querySelector(".tema-button")
 
 
 if (tema) {
     let novoTema
 
-    if (tema === "Light") {
+    if (tema === "light") {
         novoTema = "dark"
-        buttons.innerHTML = `<img src="/imagens/sun-icon.png" alt="icone do Sol">`
+        button.innerHTML = `<img src="/imagens/sun-icon.png" alt="icone do Sol">`
         body.classList.remove("light")
         body.classList.add("dark")
     }else{
-        novoTema = "Light"
-        buttons.innerHTML = `<img src="/imagens/moon-icon.png" alt="icone de lua">`
+        novoTema = "light"
+        button.innerHTML = `<img src="/imagens/moon-icon.png" alt="icone de lua">`
         body.classList.remove("dark")
         body.classList.add("light")
     }
@@ -71,7 +71,7 @@ if (tema) {
 function verificarTema() {
     const tema = localStorage.getItem("tema")
     const body = document.querySelector("body")
-    const buttons = document.querySelector(".tema-button")
+    const button = document.querySelector(".tema-button")
 
     if (tema) {
         if (tema === "dark") {

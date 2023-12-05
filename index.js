@@ -20,7 +20,7 @@ app.use(express.urlencoded({
 
 //rotas
 app.get('/limpartarefas',(requisicao, resposta) => {
-    const sql = 'DELETE * FROM tarefa'    
+    const sql = 'DELETE FROM tarefas'    
 
     conexao.query(sql, (erro) => {
 
@@ -39,8 +39,7 @@ app.post('/excluir', (requisicao, resposta) =>{
         DELETE FROM tarefas
         WHERE id = ${id}    
 
-   
-    
+      
     `
     conexao.query(sql, (erro) =>{
         if (erro){
@@ -58,7 +57,7 @@ app.get('ativas', (requisicao, resposta) => {
    const sql=
     `
     SELECT * FROM tarefas
-    WHERE completa = 0
+    WHERE completa = '0'
     
     
     `
@@ -67,16 +66,16 @@ app.get('ativas', (requisicao, resposta) => {
             return console.log(erro) 
             
         }
-        const tarefas = dados.map((dados) =>{
+        const tarefas = dados.map((dado) =>{
             return{
-                id: dados.id,
-                descricao: dados.descricao,
+                id: dado.id,
+                descricao: dado.descricao,
                 completa: false
             }
         })
 
-        const quantidadeTArefas = tarefas.length
-        resposta.render('ativas', {tarefas, quantidadeTArefas})
+        const quantidadeTarefas = tarefas.length
+        resposta.render('ativas', {tarefas, quantidadeTarefas})
     })
 
 })
@@ -101,11 +100,11 @@ app.get('/completas', (requisicao, resposta) => {
     const sql = `
         SELECT * FROM tarefas
         WHERE completa = 1
-    `;
+    `
 
     conexao.query(sql, (erro, dados) => {
         if (erro) {
-            return console.log(erro);
+            return console.log(erro)
         }
 
         const tarefas = dados.map((dado) => {
@@ -113,23 +112,22 @@ app.get('/completas', (requisicao, resposta) => {
                 id: dado.id,
                 descricao: dado.descricao,
                 completa: true
-            };
-        });
+            }
+        })
 
-        const quantidadeTarefas = tarefas.length;
-        resposta.render('completas', { tarefas, quantidadeTarefas });
-    });
-});
-
+        const quantidadeTarefas = tarefas.length
+        resposta.render('completas', { tarefas, quantidadeTarefas })
+    })
+})
 
 
 app.post('/completar', (requisicao, resposta) => {
-    const id = requisicao.body.id;
+    const id = requisicao.body.id
     const sql = `
     UPDATE tarefas
     SET completa = '1'
-    WHERE id = '${id}';
-    `;
+    WHERE id = ${id}
+    `
     conexao.query(sql, (erro) => {
         if (erro){
             return console.log(erro)   
@@ -181,7 +179,7 @@ app.get('/ativas', (requisicao, resposta)=>{
             }
         })
 
-        const quantidadeTarefas = tarefas.length;
+        const quantidadeTarefas = tarefas.length
         resposta.render('ativas', { tarefas, quantidadeTarefas })
     })
 
@@ -189,11 +187,11 @@ app.get('/ativas', (requisicao, resposta)=>{
 })
 
 app.get('/', (requisicao, resposta) => {
-    const sql = 'SELECT * FROM tarefas';
+    const sql = 'SELECT * FROM tarefas'
 
     conexao.query(sql, (erro, dados) => {
         if (erro) {
-            return console.log(erro);
+            return console.log(erro)
         }
 
         const tarefas = dados.map((dado) => {
@@ -201,17 +199,17 @@ app.get('/', (requisicao, resposta) => {
                 id: dado.id,
                 descricao: dado.descricao,
                 completa: dado.completa === 0 ? false : true
-            };
-        });
+            }
+        })
 
         const tarefasAtivas = tarefas.filter((tarefa) => {
-            return tarefa.completa === false;
-        });
+            return tarefa.completa === false && tarefa
+        })
 
-        const quantidadeTarefasAtivas = tarefasAtivas.length;
-        resposta.render('home', { tarefas, quantidadeTarefasAtivas });
-    });
-});
+        const quantidadeTarefasAtivas = tarefasAtivas.length
+        resposta.render("home", { tarefas, quantidadeTarefasAtivas })
+    })
+})
 
 
 
