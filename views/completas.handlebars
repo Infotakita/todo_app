@@ -11,7 +11,7 @@
               
 
 
-                <button>
+                <button onclick="excluirTarefa({{this.id}})">
                     <img src="/imagens/x-icon.png" alt="icone de X para excluir uma tarefa">
                 </button>
            
@@ -22,7 +22,7 @@
         {{/each}}
         
         <div class="informacoes">
-            <p>{{quantidadeTarefasAtivas}} tarefas Completas</p>
+            <p>{{quantidadeTarefas}} tarefas Completas</p>
             
             <div class="botoes">
                 <a href="/">Todas</a>

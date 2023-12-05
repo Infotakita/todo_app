@@ -19,6 +19,20 @@ app.use(express.urlencoded({
 
 
 //rotas
+app.get('/limpartarefas',(requisicao, resposta) => {
+    const sql = 'DELETE * FROM tarefa'    
+
+    conexao.query(sql, (erro) => {
+
+        if (erro) {
+            return console.log(erro)
+        }
+        resposta.redirect('/')
+    })
+})
+
+
+
 app.post('/excluir', (requisicao, resposta) =>{
     const id = requisicao.body.id
     const sql = `
@@ -198,10 +212,6 @@ app.get('/', (requisicao, resposta) => {
         resposta.render('home', { tarefas, quantidadeTarefasAtivas });
     });
 });
-
-
-
-
 
 
 
